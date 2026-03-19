@@ -10,7 +10,7 @@ public class Coin : MonoBehaviour
         }
     }
 
-    private void Collect()
+    public void Collect()
     {
         Destroy(gameObject);
     }

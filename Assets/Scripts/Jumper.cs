@@ -1,10 +1,9 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(InputReader))]
-public class PlayerMovement : MonoBehaviour
+public class Jumper : MonoBehaviour
 {
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _jumpForce = 10f;
+    [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private Transform _groundPoint;
     [SerializeField] private float _groundPointRadius = 0.2f;
     [SerializeField] private LayerMask _groundLayer;
@@ -12,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private InputReader _playerInput;
 
-    private void Start()
+    private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<InputReader>();
@@ -20,8 +19,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _rigidbody.linearVelocity = new Vector2(_playerInput.Horizontal * _speed, _rigidbody.linearVelocity.y);
-
         if (_playerInput.IsJumpPressed && IsGrounded())
         {
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
@@ -29,8 +26,5 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
-    {
-        return Physics2D.OverlapCircle(_groundPoint.position, _groundPointRadius, _groundLayer);
-    }
+    private bool IsGrounded() => Physics2D.OverlapCircle(_groundPoint.position, _groundPointRadius, _groundLayer);
 }

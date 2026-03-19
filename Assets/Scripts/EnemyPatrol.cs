@@ -1,40 +1,35 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
     [SerializeField] private float _speed = 2f;
+    [SerializeField] private float _stopDistance = 0.5f;
 
-    private Vector3 _targetWorldPosition;
-    private Transform _currentTargetTransform;
     private Rigidbody2D _rigidbody;
+    private Transform _target;
 
-    private void Start()
+    private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        _target = _pointB;
+
         _pointA.SetParent(null);
         _pointB.SetParent(null);
-
-        _currentTargetTransform = _pointB;
-        UpdateTargetPosition();
     }
 
     private void FixedUpdate()
     {
-        UpdateTargetPosition();
-
-        Vector2 direction = ((Vector2)_targetWorldPosition - _rigidbody.position).normalized;
+        Vector2 direction = ((Vector2)_target.position - _rigidbody.position).normalized;
         _rigidbody.linearVelocity = new Vector2(direction.x * _speed, _rigidbody.linearVelocity.y);
 
-        if (Vector2.Distance(_rigidbody.position, (Vector2)_targetWorldPosition) <= 0.5f)
-        {
-            _currentTargetTransform = (_currentTargetTransform == _pointA) ? _pointB : _pointA;
-        }
-    }
+        float sqrDistance = ((Vector2)_target.position - _rigidbody.position).sqrMagnitude;
 
-    private void UpdateTargetPosition()
-    {
-        _targetWorldPosition = _currentTargetTransform.position;
+        if (sqrDistance <= _stopDistance * _stopDistance)
+        {
+            _target = (_target == _pointA) ? _pointB : _pointA;
+        }
     }
 }

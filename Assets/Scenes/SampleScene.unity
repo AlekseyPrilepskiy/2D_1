@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 227342485}
   - component: {fileID: 227342484}
   - component: {fileID: 227342486}
+  - component: {fileID: 227342487}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -383,12 +384,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _speed: 5
-  _jumpForce: 5
-  _groundPoint: {fileID: 1097505598}
-  _groundPointRadius: 0.2
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &227342485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,6 +408,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c9ce80b1967b64aa8d512ad510e60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+--- !u!114 &227342487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227342478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0731e51ed196ada45b0500d8f5a5011e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Jumper
+  _jumpForce: 5
+  _groundPoint: {fileID: 1097505598}
+  _groundPointRadius: 0.2
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

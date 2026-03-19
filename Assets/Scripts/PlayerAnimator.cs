@@ -7,7 +7,7 @@ public class PlayerAnimator : MonoBehaviour
     private InputReader _playerInput;
     private SpriteRenderer _spriteRenderer;
 
-    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int s_SpeedHash = Animator.StringToHash("Speed");
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Update()
     {
         float horizontalMove = _playerInput.Horizontal;
-        _animator.SetFloat(SpeedHash, Mathf.Abs(horizontalMove));
+        _animator.SetFloat(s_SpeedHash, Mathf.Abs(horizontalMove));
 
         if (horizontalMove > 0)
         {
