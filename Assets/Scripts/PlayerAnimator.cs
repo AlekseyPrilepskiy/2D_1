@@ -1,13 +1,15 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 [RequireComponent(typeof(Animator), typeof(InputReader), typeof(SpriteRenderer))]
 public class PlayerAnimator : MonoBehaviour
 {
+    private static readonly int s_SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int s_AttackHash = Animator.StringToHash("Attack");
+
     private Animator _animator;
     private InputReader _playerInput;
     private SpriteRenderer _spriteRenderer;
-
-    private static readonly int s_SpeedHash = Animator.StringToHash("Speed");
 
     private void Awake()
     {
@@ -28,6 +30,11 @@ public class PlayerAnimator : MonoBehaviour
         else if (horizontalMove < 0)
         {
             _spriteRenderer.flipX = true;
+        }
+
+        if (_playerInput.IsAttackPressed)
+        {
+            _animator.SetTrigger(s_AttackHash);
         }
     }
 }

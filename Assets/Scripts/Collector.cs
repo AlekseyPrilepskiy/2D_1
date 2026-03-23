@@ -8,5 +8,10 @@ public class PlayerCollector : MonoBehaviour
         {
             coin.Collect();
         }
+
+        if (other.TryGetComponent(out HealthPack pack) && TryGetComponent(out Health Health))
+        {
+            pack.Collect(Health);
+        }
     }
 }

@@ -4,6 +4,7 @@ public class InputReader : MonoBehaviour
 {
     public float Horizontal { get; private set; }
     public bool IsJumpPressed { get; private set; }
+    public bool IsAttackPressed { get; private set; }
 
     private void Update()
     {
@@ -13,6 +14,16 @@ public class InputReader : MonoBehaviour
         {
             IsJumpPressed = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            IsAttackPressed = true;
+        }
+    }
+
+    public void ResetAttack()
+    {
+        IsAttackPressed = false;
     }
 
     public void ResetJump()
