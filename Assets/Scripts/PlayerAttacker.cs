@@ -3,8 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 public class PlayerAttacker : MonoBehaviour
 {
-    [SerializeField] private float _attackRange = 1f;
-    [SerializeField] private int _damage = 25;
+    [SerializeField] private Attacker _attacker;
+    [SerializeField] private int _damage = 20;
+    [SerializeField] private float _range = 1f;
     [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private Transform _attackPoint;
 
@@ -15,22 +16,22 @@ public class PlayerAttacker : MonoBehaviour
         _playerInput = GetComponent<InputReader>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_playerInput.IsAttackPressed)
-        {
-            Attack();
-            _playerInput.ResetAttack();
-        }
+        _playerInput.Attacked += OnAttack;
+    }
+    private void OnDisable()
+    {
+        _playerInput.Attacked -= OnAttack;
     }
 
-    private void Attack()
+    private void OnAttack()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(_attackPoint.position, _range, _enemyLayer);
 
-        foreach (Collider2D enemyCollider in hitEnemies)
+        foreach (var hit in hits)
         {
-            if (enemyCollider.TryGetComponent(out Health enemyHealth))
+            if (hit.TryGetComponent(out Health enemyHealth))
             {
                 enemyHealth.TakeDamage(_damage);
             }

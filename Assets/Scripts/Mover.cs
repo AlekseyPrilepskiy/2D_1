@@ -7,6 +7,7 @@ public class Mover : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
     private InputReader _playerInput;
+    private float _direction;
 
     private void Awake()
     {
@@ -14,8 +15,25 @@ public class Mover : MonoBehaviour
         _playerInput = GetComponent<InputReader>();
     }
 
+    private void OnEnable() => _playerInput.Moved += OnMove;
+    private void OnDisable() => _playerInput.Moved -= OnMove;
+
+    private void OnMove(float direction)
+    {
+        _direction = direction;
+
+        if (direction > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (direction < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+    }
+
     private void FixedUpdate()
     {
-        _rigidbody.linearVelocity = new Vector2(_playerInput.Horizontal * _speed, _rigidbody.linearVelocity.y);
+        _rigidbody.linearVelocity = new Vector2(_direction * _speed, _rigidbody.linearVelocity.y);
     }
 }

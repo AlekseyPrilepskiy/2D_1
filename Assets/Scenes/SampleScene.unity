@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 227342488}
   - component: {fileID: 227342490}
   - component: {fileID: 227342489}
+  - component: {fileID: 227342491}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -371,7 +372,6 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1097505598}
-  - {fileID: 330585546}
   - {fileID: 1884202545}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -424,9 +424,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0731e51ed196ada45b0500d8f5a5011e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Jumper
-  _jumpForce: 5
+  _force: 10
   _groundPoint: {fileID: 1097505598}
-  _groundPointRadius: 0.2
+  _radius: 0.2
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -454,8 +454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0dc5ff935d6d142927b98b7034def1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttacker
-  _attackRange: 1
+  _attacker: {fileID: 227342491}
   _damage: 25
+  _range: 1
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -472,7 +473,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c9e35299d79ad478c86ad70648e057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  _maxHealth: 100
+  _max: 100
+--- !u!114 &227342491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227342478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af36b5af7a4e9946bbf46c3c93d9c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Attacker
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +498,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -532,7 +546,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 10
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -560,11 +574,11 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -3}
-  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_LocalPosition: {x: -4, y: 1.05, z: -9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 227342483}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -610,6 +624,21 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0b33714fa644442a96e701d4f02c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollower
+  _target: {fileID: 227342483}
+  _smoothSpeed: 0
+  _offset: {x: 0, y: 2, z: -10}
 --- !u!1001 &333064937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1831,3 +1860,4 @@ SceneRoots:
   - {fileID: 1744620748}
   - {fileID: 366636968}
   - {fileID: 1101259565}
+  - {fileID: 330585546}

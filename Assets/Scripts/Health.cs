@@ -3,37 +3,36 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth = 100;
-
-    private int _currentHealth;
+    [SerializeField] private int _max = 100;
+    private int _current;
 
     private void Start()
     {
-        _currentHealth = _maxHealth;
+        _current = _max;
     }
 
     public void TakeDamage(int damage)
     {
-        if (_currentHealth > 0)
+        if (_current > 0)
         {
-            _currentHealth -= damage;
+            _current -= damage;
+        }
 
-            if (_currentHealth <= 0)
-            {
-                Die();
-            }
+        if (_current <= 0)
+        {
+            Die();
         }
     }
 
     public void Heal(int amount)
     {
-        if (_currentHealth > 0)
+        if (_current > 0)
         {
-            _currentHealth += amount;
+            _current += amount;
 
-            if (_currentHealth >= _maxHealth)
+            if (_current >= _max)
             {
-                _currentHealth = _maxHealth;
+                _current = _max;
             }
         }
     }

@@ -77,6 +77,9 @@ GameObject:
   - component: {fileID: 3406944231446214221}
   - component: {fileID: 3009229752693402541}
   - component: {fileID: 4109840452370223795}
+  - component: {fileID: 31024804599022084}
+  - component: {fileID: 8032511038812413899}
+  - component: {fileID: 2900306942653958271}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -243,18 +246,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe55466bae45244fa6e158f6c1acbba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPatrol
-  _pointA: {fileID: 1000448693109330459}
-  _pointB: {fileID: 3646270527366210107}
-  _patrolSpeed: 2
-  _stopDistanceSqr: 0.04
-  _visionRadius: 5
-  _chaseSpeed: 4
+  _visionRadius: 3
+  _attackRadius: 1
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _attackRadius: 1
+  _patrolSpeed: 2
+  _chaseSpeed: 3
   _damage: 10
   _attackCooldown: 1.5
+  _pointA: {fileID: 1000448693109330459}
+  _pointB: {fileID: 3646270527366210107}
 --- !u!114 &4109840452370223795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,4 +269,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c9e35299d79ad478c86ad70648e057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  _maxHealth: 100
+  _max: 100
+--- !u!114 &31024804599022084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788517713765485468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237ab22119f45a44c94883f9bcd49298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TargetFinder
+--- !u!114 &8032511038812413899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788517713765485468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663e9d4d877e82d4698e13307c73b998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Patroller
+  _stopThreshold: 0.2
+--- !u!114 &2900306942653958271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788517713765485468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6af36b5af7a4e9946bbf46c3c93d9c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Attacker

@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
-[RequireComponent(typeof(Animator), typeof(InputReader), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator), typeof(InputReader))]
 public class PlayerAnimator : MonoBehaviour
 {
     private static readonly int s_SpeedHash = Animator.StringToHash("Speed");
@@ -9,32 +8,41 @@ public class PlayerAnimator : MonoBehaviour
 
     private Animator _animator;
     private InputReader _playerInput;
-    private SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _playerInput = GetComponent<InputReader>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        float horizontalMove = _playerInput.Horizontal;
-        _animator.SetFloat(s_SpeedHash, Mathf.Abs(horizontalMove));
+        _playerInput.Moved += OnHorizontalChanged;
+        _playerInput.Attacked += OnAttack;
+    }
 
-        if (horizontalMove > 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
-        else if (horizontalMove < 0)
-        {
-            _spriteRenderer.flipX = true;
-        }
+    private void OnDisable()
+    {
+        _playerInput.Moved -= OnHorizontalChanged;
+        _playerInput.Attacked -= OnAttack;
+    }
 
-        if (_playerInput.IsAttackPressed)
+    private void OnHorizontalChanged(float direction)
+    {
+        _animator.SetFloat(s_SpeedHash, Mathf.Abs(direction));
+
+        if (direction > 0)
         {
-            _animator.SetTrigger(s_AttackHash);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
+        else if (direction < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+    }
+
+    private void OnAttack()
+    {
+        _animator.SetTrigger(s_AttackHash);
     }
 }
