@@ -12,6 +12,7 @@ public class InputReader : MonoBehaviour
     private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
+
         if (Mathf.Abs(horizontal - _lastHorizontal) > 0.01f)
         {
             _lastHorizontal = horizontal;

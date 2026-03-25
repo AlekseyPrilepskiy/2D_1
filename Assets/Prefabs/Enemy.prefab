@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 31024804599022084}
   - component: {fileID: 8032511038812413899}
   - component: {fileID: 2900306942653958271}
+  - component: {fileID: 297537167302759664}
+  - component: {fileID: -7405230151052586790}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -251,8 +253,6 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _patrolSpeed: 2
-  _chaseSpeed: 3
   _damage: 10
   _attackCooldown: 1.5
   _pointA: {fileID: 1000448693109330459}
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663e9d4d877e82d4698e13307c73b998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Patroller
-  _stopThreshold: 0.2
+  _threshold: 0.2
 --- !u!114 &2900306942653958271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,3 +307,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36b5af7a4e9946bbf46c3c93d9c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attacker
+--- !u!114 &297537167302759664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788517713765485468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b22e1a28437968468babddce9a97fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Mover
+  _speed: 3
+--- !u!114 &-7405230151052586790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788517713765485468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5a169e7a44eb6408d567add4124910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Chaser

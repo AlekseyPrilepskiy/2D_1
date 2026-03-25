@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 227342490}
   - component: {fileID: 227342489}
   - component: {fileID: 227342491}
+  - component: {fileID: 227342492}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -424,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0731e51ed196ada45b0500d8f5a5011e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Jumper
-  _force: 10
+  _force: 5
   _groundPoint: {fileID: 1097505598}
   _radius: 0.2
   _groundLayer:
@@ -486,6 +487,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36b5af7a4e9946bbf46c3c93d9c31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attacker
+--- !u!114 &227342492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227342478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464813c3cd7a26145bef227b093f944a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,6 +1752,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 297537167302759664, guid: 80aea232c6d616f4d92a51888a56e18f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8607998380960785521, guid: 80aea232c6d616f4d92a51888a56e18f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2

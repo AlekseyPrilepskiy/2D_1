@@ -1,17 +1,25 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Mover))]
 public class Patroller : MonoBehaviour
 {
-    [SerializeField] private float _stopThreshold = 0.2f;
+    [SerializeField] private float _threshold = 0.3f;
+    private Mover _mover;
 
-    public void Move(Rigidbody2D rigidbody, Vector2 targetPosition, float speed)
+    private void Awake()
     {
-        Vector2 direction = (targetPosition - rigidbody.position).normalized;
-        rigidbody.linearVelocity = new Vector2(direction.x * speed, rigidbody.linearVelocity.y);
+        _mover = GetComponent<Mover>();
     }
 
-    public bool Reached(Vector2 current, Vector2 target)
+    public void Execute(Transform point)
     {
-        return (target - current).sqrMagnitude <= _stopThreshold * _stopThreshold;
+        float direction = Mathf.Sign(point.position.x - transform.position.x);
+        _mover.SetDirection(direction);
+    }
+
+    public bool Reached(Transform point)
+    {
+        float distanceX = Mathf.Abs(point.position.x - transform.position.x);
+        return distanceX <= _threshold;
     }
 }

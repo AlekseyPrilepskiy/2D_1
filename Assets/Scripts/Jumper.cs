@@ -4,8 +4,8 @@ using UnityEngine;
 public class Jumper : MonoBehaviour
 {
     [SerializeField] private float _force = 5f;
-    [SerializeField] private Transform _groundPoint;
     [SerializeField] private float _radius = 0.2f;
+    [SerializeField] private Transform _groundPoint;
     [SerializeField] private LayerMask _groundLayer;
 
     private Rigidbody2D _rigidbody;
@@ -17,8 +17,15 @@ public class Jumper : MonoBehaviour
         _playerInput = GetComponent<InputReader>();
     }
 
-    private void OnEnable() => _playerInput.Jumped += OnJump;
-    private void OnDisable() => _playerInput.Jumped -= OnJump;
+    private void OnEnable()
+    {
+        _playerInput.Jumped += OnJump;
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Jumped -= OnJump;
+    }
 
     private void OnJump()
     {
