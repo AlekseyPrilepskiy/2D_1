@@ -4,21 +4,26 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int _max = 100;
-    private int _current;
+    public float Current { get; private set; }
+
+    public event Action<float, float> Changed;
 
     private void Start()
     {
-        _current = _max;
+        Current = _max;
+        Changed?.Invoke(Current, _max);
     }
 
     public void TakeDamage(int damage)
     {
-        if (_current > 0)
+        if (Current > 0)
         {
-            _current -= damage;
+            Current -= damage;
+            Current = Mathf.Clamp(Current, 0, _max);
+            Changed?.Invoke(Current, _max);
         }
 
-        if (_current <= 0)
+        if (Current <= 0)
         {
             Die();
         }
@@ -26,19 +31,23 @@ public class Health : MonoBehaviour
 
     public void Heal(int amount)
     {
-        if (_current > 0)
+        if (Current > 0)
         {
-            _current += amount;
+            Current += amount;
 
-            if (_current >= _max)
+            if (Current >= _max)
             {
-                _current = _max;
+                Current = _max;
             }
+
+            Current = Mathf.Clamp(Current, 0, _max);
+            Changed?.Invoke(Current, _max);
         }
     }
 
     private void Die()
     {
         Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }

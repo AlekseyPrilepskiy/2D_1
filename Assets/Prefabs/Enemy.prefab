@@ -250,11 +250,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPatrol
   _visionRadius: 3
   _attackRadius: 1
+  _attackCooldown: 1.5
+  _damage: 10
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _damage: 10
-  _attackCooldown: 1.5
   _pointA: {fileID: 1000448693109330459}
   _pointB: {fileID: 3646270527366210107}
 --- !u!114 &4109840452370223795
