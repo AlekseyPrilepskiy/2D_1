@@ -14,7 +14,7 @@ public class Health : MonoBehaviour
         Changed?.Invoke(Current, _max);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (Current > 0)
         {
@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         if (Current > 0)
         {

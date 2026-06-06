@@ -6,6 +6,7 @@ public class InputReader : MonoBehaviour
     public event Action<float> Moved;
     public event Action Jumped;
     public event Action Attacked;
+    public event Action Vampired;
 
     private float _lastHorizontal;
 
@@ -27,6 +28,11 @@ public class InputReader : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             Attacked?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Vampired?.Invoke();
         }
     }
 }
