@@ -1,48 +1,66 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class VampirismAbility : MonoBehaviour
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private GameObject _visualArea;
-
-    [SerializeField] private KeyCode _activationKey = KeyCode.E;
-    [SerializeField] private int damagePerSecond = 15;
+    [SerializeField] private Health _playerHealth;
+    [SerializeField] private GameObject _vampireVisualSphere;
     [SerializeField] private float _radius = 3f;
+    [SerializeField] private float _damagePerSecond = 15f;
     [SerializeField] private float _duration = 6f;
     [SerializeField] private float _cooldown = 4f;
-
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private int _maxTargetCount = 5;
 
-    private bool _isReady = true;
     public event Action<float, float, bool> StateChanged;
+
+    private Collider2D[] _overlapResults;
+    private InputReader _playerInput;
+    private bool _isReady = true;
+
+    private void Awake()
+    {
+        _overlapResults = new Collider2D[_maxTargetCount];
+        _playerInput = GetComponent<InputReader>();
+    }
 
     private void Start()
     {
-        if (_visualArea != null)
+        if (_vampireVisualSphere != null)
         {
-            _visualArea.SetActive(false);
+            _vampireVisualSphere.SetActive(false);
         }
 
         StateChanged?.Invoke(_duration, _duration, false);
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(_activationKey) && _isReady)
+        _playerInput.Vampired += ActivateAbility;
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.Vampired -= ActivateAbility;
+    }
+
+    private void ActivateAbility()
+    {
+        if (_isReady)
         {
-            StartCoroutine(ExecuteAbilityRoutine());
+            StartCoroutine(ActiveAbilityRoutine());
         }
     }
 
-    private IEnumerator ExecuteAbilityRoutine()
+    private IEnumerator ActiveAbilityRoutine()
     {
         _isReady = false;
 
-        if (_visualArea != null)
+        if (_vampireVisualSphere != null)
         {
-            _visualArea.SetActive(true);
+            _vampireVisualSphere.SetActive(true);
         }
 
         float activeTimer = _duration;
@@ -50,32 +68,35 @@ public class VampirismAbility : MonoBehaviour
         while (activeTimer > 0)
         {
             activeTimer -= Time.deltaTime;
-
             StateChanged?.Invoke(activeTimer, _duration, false);
 
-            Health closestEnemy = FindEnemy();
+            Health closestEnemy = FindClosestEnemy();
 
             if (closestEnemy != null)
             {
-                float calculatedValue = damagePerSecond * Time.deltaTime;
+                float calculatedValue = _damagePerSecond * Time.deltaTime;
                 closestEnemy.TakeDamage(calculatedValue);
-                _health.Heal(calculatedValue);
+                _playerHealth.Heal(calculatedValue);
             }
 
             yield return null;
         }
 
-        if (_visualArea != null)
+        if (_vampireVisualSphere != null)
         {
-            _visualArea.SetActive(false);
+            _vampireVisualSphere.SetActive(false);
         }
 
+        yield return StartCoroutine(CooldownRoutine());
+    }
+
+    private IEnumerator CooldownRoutine()
+    {
         float cooldownTimer = 0f;
 
         while (cooldownTimer < _cooldown)
         {
             cooldownTimer += Time.deltaTime;
-
             StateChanged?.Invoke(cooldownTimer, _cooldown, true);
             yield return null;
         }
@@ -84,29 +105,39 @@ public class VampirismAbility : MonoBehaviour
         StateChanged?.Invoke(_duration, _duration, false);
     }
 
-    private Health FindEnemy()
+    private Health FindClosestEnemy()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius, _enemyLayer);
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, _radius, _overlapResults, _enemyLayer);
 
-        Health Enemy = null;
-        float minDistance = Mathf.Infinity;
+        Health closestEnemy = null;
 
-        foreach (var collider in colliders)
+        float minSqrDistance = Mathf.Infinity;
+        Vector2 currentPosition = transform.position;
+
+        for (int i = 0; i < count; i++)
         {
+            Collider2D collider = _overlapResults[i];
+
+            if (collider == null)
+            {
+                continue;
+            }
+
             Health enemyHealth = collider.GetComponent<Health>();
 
             if (enemyHealth != null && enemyHealth.Current > 0)
             {
-                float distance = Vector2.Distance(transform.position, collider.transform.position);
+                Vector2 direction = (Vector2)collider.transform.position - currentPosition;
+                float sqrDistance = direction.sqrMagnitude;
 
-                if (distance < minDistance)
+                if (sqrDistance < minSqrDistance)
                 {
-                    minDistance = distance;
-                    Enemy = enemyHealth;
+                    minSqrDistance = sqrDistance;
+                    closestEnemy = enemyHealth;
                 }
             }
         }
 
-        return Enemy;
+        return closestEnemy;
     }
 }

@@ -3,36 +3,44 @@ using UnityEngine.UI;
 
 public class VampirismUI : MonoBehaviour
 {
-    [SerializeField] private VampirismAbility _abilitySource;
+    [SerializeField] private VampirismAbility _ability;
     [SerializeField] private Slider _slider;
-    [SerializeField] private Image _fill;
-    [SerializeField] private Color _activeColor = Color.red;
+    [SerializeField] private Color _activeColor = Color.blue;
     [SerializeField] private Color _cooldownColor = Color.gray;
+
+    private Image _sliderFillImage;
+
+    private void Awake()
+    {
+        if (_slider != null && _slider.fillRect != null)
+        {
+            _sliderFillImage = _slider.fillRect.GetComponent<Image>();
+        }
+    }
 
     private void OnEnable()
     {
-        if (_abilitySource != null)
-        {
-            _abilitySource.StateChanged += UpdateSlider;
-        }
+        _ability.StateChanged += OnAbilityStateChanged;
     }
 
     private void OnDisable()
     {
-        if (_abilitySource != null)
-        {
-            _abilitySource.StateChanged -= UpdateSlider;
-        }
+        _ability.StateChanged -= OnAbilityStateChanged;
     }
 
-    private void UpdateSlider(float current, float max, bool isCooldown)
+    private void OnAbilityStateChanged(float current, float max, bool isCooldown)
     {
+        if (_slider == null)
+        {
+            return;
+        }
+
         _slider.maxValue = max;
         _slider.value = current;
 
-        if (_fill != null)
+        if (_sliderFillImage != null)
         {
-            _fill.color = isCooldown ? _cooldownColor : _activeColor;
+            _sliderFillImage.color = isCooldown ? _cooldownColor : _activeColor;
         }
     }
 }

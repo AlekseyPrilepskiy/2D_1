@@ -614,16 +614,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6610fd52596113d45adf45eaad9ece2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VampirismAbility
-  _health: {fileID: 227342490}
-  _visualArea: {fileID: 1565212917}
-  _activationKey: 101
-  damagePerSecond: 15
-  _radius: 2
+  _playerHealth: {fileID: 227342490}
+  _vampireVisualSphere: {fileID: 1565212917}
+  _radius: 3
+  _damagePerSecond: 15
   _duration: 6
   _cooldown: 4
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  _maxTargetCount: 5
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,11 +2165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceec064b534a8af439f624932166140d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VampirismUI
-  _abilitySource: {fileID: 227342493}
+  _ability: {fileID: 227342493}
   _slider: {fileID: 1130135180}
-  _fill: {fileID: 1039429562}
-  _activeColor: {r: 1, g: 0, b: 0, a: 1}
-  _cooldownColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _activeColor: {r: 0, g: 0.49722263, b: 0.9764706, a: 1}
+  _cooldownColor: {r: 0.274028, g: 0.3324781, b: 0.38005382, a: 1}
 --- !u!114 &1130135180
 MonoBehaviour:
   m_ObjectHideFlags: 0
